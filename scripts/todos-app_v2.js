@@ -25,6 +25,7 @@ const incompleteTodos = todos.filter(function (todo) {
 })
 
 const completeTodos = todos.length - incompleteTodos.length
+// let hideCompTodos = false
 
 const summary = document.createElement('h3')
 document.querySelector('body').appendChild(summary)
@@ -41,7 +42,23 @@ const displayTodos = function (todos, filter) {
     } else if (todo.body.toLowerCase().includes(filters.searchText.toLowerCase())) {
       return todo.body.toLowerCase().includes(filters.searchText.toLowerCase())
     }
+    // Or remove the example lines below and use these lines. If using this method filteredTodos can be const
+    // const searchTextMatch = todo.title.toLowerCase().includes(filters.searchText.toLowerCase())
+    // const hideCompleteTodos = !filters.hideCompTodos || !todo.complete
+
+    // return searchTextMatch && hideCompleteTodos
   })
+
+// could have filtered the values inside the displayTodos function rather than pass them in
+  //  return !filters.hideCompTodos || !todo.completed
+
+  // OR
+
+  // if (filters.hideCompTodos) {
+  //   return !todos.complete
+  // } else {
+  //   return true
+  // }
 
   document.querySelector('#todos').innerHTML = ''
 
