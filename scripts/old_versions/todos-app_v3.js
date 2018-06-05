@@ -1,4 +1,24 @@
-const todos = []
+const todos = [{
+  title: 'Holiday',
+  body: 'I need a holiday',
+  complete: true
+}, {
+  title: 'Camping',
+  body: 'Looking forward to my next hammock outing',
+  complete: false
+}, {
+  title: 'Check the weekend weather',
+  body: 'Looks like rain',
+  complete: false
+}, {
+  title: 'Buy new SIM card for scout camp',
+  body: 'Get a Verizon or AT&T SIM card',
+  complete: false
+}, {
+  title: 'Test 2" tree straps',
+  body: 'Setup hammock with the new straps and toggles for scout camp',
+  complete: false
+}]
 
 const incompleteTodos = todos.filter(function (todo) {
   return !todo.complete
