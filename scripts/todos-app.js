@@ -8,6 +8,8 @@ const filters = {
   hideCompTodos: false
 }
 
+displayTodos(loadTodos(), filters)
+
 document.querySelector('#filter-todo').addEventListener('input', function (e) {
   filters.searchText = e.target.value
   displayTodos(loadTodos(), filters)

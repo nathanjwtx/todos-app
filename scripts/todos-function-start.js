@@ -1,8 +1,7 @@
 const loadTodos = function () {
   // Call pre-filtered list of Todos
   if (localStorage.getItem('todos') != null) {
-    let todos = JSON.parse(localStorage.getItem('todos'))
-    return todos
+    return JSON.parse(localStorage.getItem('todos'))
   } else {
     return []
   }
@@ -20,7 +19,8 @@ const displayTodos = function (todos, filter) {
   const filteredTodos = todos.filter(function (todo) {
     if (todo.title.toLowerCase().includes(filters.searchText.toLowerCase()) ||
         todo.body.toLowerCase().includes(filters.searchText.toLowerCase())) {
-      return todo.title.toLowerCase().includes(filters.searchText.toLowerCase())
+      debugger
+          return todo.title.toLowerCase().includes(filters.searchText.toLowerCase())
     }
   })
   document.querySelector('#todos').innerHTML = ''
