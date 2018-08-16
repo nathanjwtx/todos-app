@@ -9,7 +9,9 @@ const loadTodos = function () {
 
 const saveTodo = function (title, body) {
     let todos = loadTodos()
-    todos.push({title: title,
+    todos.push({
+        id: uuidv4(),
+        title: title,
         body: body,
         complete: false})
     localStorage.setItem('todos', JSON.stringify(todos))
