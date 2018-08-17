@@ -39,10 +39,16 @@ const displayTodos = function (todos, filter) {
         }
     })
     document.querySelector('#todos').innerHTML = ''
+    var comp = 0
     filteredTodos.forEach(function (todo) {
-        generateTodoDOM(todo)
+        if (filter.hideCompTodos && todo.complete) {
+            generateTodoDOM(todo)
+            comp += 1
+        } else if (!filter.hideCompTodos) {
+            generateTodoDOM(todo)
+        }
     })
-    summaryDOM(todos, filteredTodos)
+    summaryDOM(todos, comp)
 }
 
 const generateTodoDOM = function (todo) {
@@ -54,6 +60,9 @@ const generateTodoDOM = function (todo) {
     
     // setup checkbox
     todoCheck.setAttribute('type', 'checkbox')
+    if (todo.complete) {
+        todoCheck.checked = true
+    }
     todoRoot.appendChild(todoCheck)
 
     // setup span element
@@ -79,6 +88,12 @@ const generateTodoDOM = function (todo) {
 }
 
 const summaryDOM = function (todos, filteredTodos) {
+    var todoCount
+    if (filteredTodos == 0) {
+        todoCount = todos.length
+    } else {
+        todoCount = filteredTodos
+    }
     summary.textContent = `You have ${(todos.length)} total Todos 
-    and ${filteredTodos.length} Todos left that match your search criteria`
+    and ${todoCount} Todos left that match your search criteria`
 }
