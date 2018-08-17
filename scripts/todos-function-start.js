@@ -17,6 +17,19 @@ const saveTodo = function (title, body) {
     localStorage.setItem('todos', JSON.stringify(todos))
 }
 
+const saveAllTodos = function (todos) {
+    localStorage.setItem('todos', JSON.stringify(todos))
+}
+
+const removeTodo = function (id) {
+    const todoIndex = todos.findIndex(function (todo) {
+        return todo.id = id
+    })
+    if (todoIndex > -1) {
+        todos.splice(todoIndex, 1)
+    }
+}
+
 const displayTodos = function (todos, filter) {
     const filteredTodos = todos.filter(function (todo) {
         if (todo.title.toLowerCase().includes(filters.searchText.toLowerCase()) ||
@@ -49,6 +62,11 @@ const generateTodoDOM = function (todo) {
 
     // setup delete button
     todoDelete.textContent = 'Remove'
+    todoDelete.addEventListener('click', function () {
+        removeTodo(todo.id)
+        saveAllTodos(todos)
+        displayTodos(todos, filters)
+    })
     todoRoot.appendChild(todoDelete)
 
     todoTitle.textContent = todo.title
