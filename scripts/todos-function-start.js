@@ -65,10 +65,11 @@ const generateTodoDOM = function (todo) {
     
     // setup checkbox
     todoCheck.setAttribute('type', 'checkbox')
-    if (todo.complete) {
-        todoCheck.checked = true
-    }
+    todoCheck.checked = todo.complete
+    
     todoCheck.addEventListener('change', function () {
+        // shorter way of writing the if statement. Reverses the existing boolean
+        // todo.complete = !todo.complete
         if (todoCheck.checked) {
             todo.complete = true
         } else {
