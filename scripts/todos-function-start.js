@@ -39,16 +39,21 @@ const displayTodos = function (todos, filter) {
         }
     })
     document.querySelector('#todos').innerHTML = ''
-    var comp = 0
+    var incomplete = 0
+    var complete = 0
+    // filter out completed todos
     filteredTodos.forEach(function (todo) {
-        if (filter.hideCompTodos && todo.complete) {
+        if (filter.hideCompTodos && !todo.complete) {
             generateTodoDOM(todo)
-            comp += 1
+            incomplete += 1
+        } else if (filter.hideCompTodos && todo.complete) {
+            // generateTodoDOM(todo)
+            complete += 1
         } else if (!filter.hideCompTodos) {
             generateTodoDOM(todo)
         }
     })
-    summaryDOM(todos, comp)
+    summaryDOM(todos, incomplete, complete)
 }
 
 const generateTodoDOM = function (todo) {
@@ -63,6 +68,15 @@ const generateTodoDOM = function (todo) {
     if (todo.complete) {
         todoCheck.checked = true
     }
+    todoCheck.addEventListener('change', function () {
+        if (todoCheck.checked) {
+            todo.complete = true
+        } else {
+            todo.complete = false
+        }
+        saveAllTodos(todos)
+        displayTodos(todos, filters)
+    })
     todoRoot.appendChild(todoCheck)
 
     // setup span element
@@ -82,17 +96,18 @@ const generateTodoDOM = function (todo) {
 
     document.querySelector('#todos').appendChild(todoTitle)
     document.querySelector('#todos').appendChild(todoRoot)
-    
 
     return todoRoot
 }
 
-const summaryDOM = function (todos, filteredTodos) {
+const summaryDOM = function (todos, incomplete, complete) {
     var todoCount
-    if (filteredTodos == 0) {
+    if (complete == todos.length) {
+        todoCount = 0
+    } else if (complete == 0) {
         todoCount = todos.length
     } else {
-        todoCount = filteredTodos
+        todoCount = incomplete
     }
     summary.textContent = `You have ${(todos.length)} total Todos 
     and ${todoCount} Todos left that match your search criteria`
