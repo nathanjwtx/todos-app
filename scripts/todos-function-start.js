@@ -1,4 +1,4 @@
-const loadTodos = function () {
+const loadTodos = () => {
     // Call pre-filtered list of Todos
     if (localStorage.getItem('todos') != null) {
         return JSON.parse(localStorage.getItem('todos'))
@@ -7,7 +7,7 @@ const loadTodos = function () {
     }
 }
 
-const saveTodo = function (title, body) {
+const saveTodo = (title, body) => {
     let todos = loadTodos()
     todos.push({
         id: uuidv4(),
@@ -17,21 +17,17 @@ const saveTodo = function (title, body) {
     localStorage.setItem('todos', JSON.stringify(todos))
 }
 
-const saveAllTodos = function (todos) {
-    localStorage.setItem('todos', JSON.stringify(todos))
-}
+const saveAllTodos = (todos) => localStorage.setItem('todos', JSON.stringify(todos))
 
-const removeTodo = function (id) {
-    const todoIndex = todos.findIndex(function (todo) {
-        return todo.id = id
-    })
+const removeTodo = (id) => {
+    const todoIndex = todos.findIndex((todo) => todo.id = id)
     if (todoIndex > -1) {
         todos.splice(todoIndex, 1)
     }
 }
 
-const displayTodos = function (todos, filter) {
-    const filteredTodos = todos.filter(function (todo) {
+const displayTodos = (todos, filter) => {
+    const filteredTodos = todos.filter((todo) => {
         if (todo.title.toLowerCase().includes(filters.searchText.toLowerCase()) ||
             todo.body.toLowerCase().includes(filters.searchText.toLowerCase())) {
         // debugger
@@ -42,7 +38,7 @@ const displayTodos = function (todos, filter) {
     var incomplete = 0
     var complete = 0
     // filter out completed todos
-    filteredTodos.forEach(function (todo) {
+    filteredTodos.forEach((todo) => {
         if (filter.hideCompTodos && !todo.complete) {
             generateTodoDOM(todo)
             incomplete += 1
@@ -56,7 +52,7 @@ const displayTodos = function (todos, filter) {
     summaryDOM(todos, incomplete, complete)
 }
 
-const generateTodoDOM = function (todo) {
+const generateTodoDOM = (todo) => {
     const todoRoot = document.createElement('div')
     const todoCheck = document.createElement('input')
     const todoText = document.createElement('span')
@@ -67,7 +63,7 @@ const generateTodoDOM = function (todo) {
     todoCheck.setAttribute('type', 'checkbox')
     todoCheck.checked = todo.complete
     
-    todoCheck.addEventListener('change', function () {
+    todoCheck.addEventListener('change', () => {
         // shorter way of writing the if statement. Reverses the existing boolean
         // todo.complete = !todo.complete
         if (todoCheck.checked) {
@@ -101,7 +97,7 @@ const generateTodoDOM = function (todo) {
     return todoRoot
 }
 
-const summaryDOM = function (todos, incomplete, complete) {
+const summaryDOM = (todos, incomplete, complete) => {
     var todoCount
     if (complete == todos.length) {
         todoCount = 0
