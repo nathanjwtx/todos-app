@@ -1,10 +1,6 @@
 const loadTodos = () => {
     // Call pre-filtered list of Todos
-    if (localStorage.getItem('todos') != null) {
-        return JSON.parse(localStorage.getItem('todos'))
-    } else {
-        return []
-    }
+    return localStorage.getItem('todos') != null ? JSON.parse(localStorage.getItem('todos')) : []
 }
 
 const saveTodo = (title, body) => {
