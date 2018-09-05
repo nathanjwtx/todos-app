@@ -15,14 +15,35 @@ const saveTodo = (title, body) => {
 
 const saveAllTodos = (todos) => localStorage.setItem('todos', JSON.stringify(todos))
 
-const removeTodo = (id) => {
-    const todoIndex = todos.findIndex((todo) => todo.id = id)
-    if (todoIndex > -1) {
-        todos.splice(todoIndex, 1)
+const findTodo = (id) => {
+    var position = -1
+    for (let index = 0; index < todos.length; index++) {
+        if (todos[index].id === id) {
+            position = index
+        }
     }
+    console.log(`Position: ${position}`)
+    return position
+}
+
+const removeTodo = (id) => {
+    // debugger
+    console.log(id)
+    // const todoIndex = todos.findIndex(todo => todo.id === id)
+    // const todoIndex = todos.findIndex(function (todo) {
+    //     return todo.id === id
+    // })
+    const pos = findTodo(id)
+    console.log(`pos: ${pos}`)
+    if (pos > -1) {
+        todos.splice(pos, 1)
+    }
+    console.log(todos)
 }
 
 const displayTodos = (todos, filter) => {
+    console.log(todos.length)
+    // debugger
     const filteredTodos = todos.filter((todo) => {
         if (todo.title.toLowerCase().includes(filters.searchText.toLowerCase()) ||
             todo.body.toLowerCase().includes(filters.searchText.toLowerCase())) {
@@ -30,11 +51,13 @@ const displayTodos = (todos, filter) => {
             return todo.title.toLowerCase().includes(filters.searchText.toLowerCase())
         }
     })
+    console.log(filteredTodos)
     document.querySelector('#todos').innerHTML = ''
     var incomplete = 0
     var complete = 0
     // filter out completed todos
-    filteredTodos.forEach((todo) => {
+    // filteredTodos.forEach((todo) => {
+    todos.forEach((todo) => {
         if (filter.hideCompTodos && !todo.complete) {
             generateTodoDOM(todo)
             incomplete += 1
@@ -81,6 +104,7 @@ const generateTodoDOM = (todo) => {
     todoDelete.addEventListener('click', function () {
         removeTodo(todo.id)
         saveAllTodos(todos)
+        // debugger
         displayTodos(todos, filters)
     })
     todoRoot.appendChild(todoDelete)
