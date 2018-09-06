@@ -13,51 +13,34 @@ const saveTodo = (title, body) => {
     localStorage.setItem('todos', JSON.stringify(todos))
 }
 
-const saveAllTodos = (todos) => localStorage.setItem('todos', JSON.stringify(todos))
-
-const findTodo = (id) => {
-    var position = -1
-    for (let index = 0; index < todos.length; index++) {
-        if (todos[index].id === id) {
-            position = index
-        }
-    }
-    console.log(`Position: ${position}`)
-    return position
+const saveAllTodos = (todos) => {
+    console.log(todos)
+    localStorage.setItem('todos', JSON.stringify(todos))
 }
 
 const removeTodo = (id) => {
-    // debugger
-    console.log(id)
-    // const todoIndex = todos.findIndex(todo => todo.id === id)
-    // const todoIndex = todos.findIndex(function (todo) {
-    //     return todo.id === id
-    // })
-    const pos = findTodo(id)
-    console.log(`pos: ${pos}`)
-    if (pos > -1) {
-        todos.splice(pos, 1)
+    const todoIndex = todos.findIndex(todo => todo.id === id)
+    console.log(todoIndex)
+    if (todoIndex > -1) {
+        todos.splice(todoIndex, 1)
     }
-    console.log(todos)
+    saveAllTodos(todos)
 }
 
 const displayTodos = (todos, filter) => {
     console.log(todos.length)
-    // debugger
     const filteredTodos = todos.filter((todo) => {
         if (todo.title.toLowerCase().includes(filters.searchText.toLowerCase()) ||
             todo.body.toLowerCase().includes(filters.searchText.toLowerCase())) {
-        // debugger
             return todo.title.toLowerCase().includes(filters.searchText.toLowerCase())
         }
     })
-    console.log(filteredTodos)
+    // const filteredTodos = todos
     document.querySelector('#todos').innerHTML = ''
     var incomplete = 0
     var complete = 0
     // filter out completed todos
-    // filteredTodos.forEach((todo) => {
-    todos.forEach((todo) => {
+    filteredTodos.forEach((todo) => {
         if (filter.hideCompTodos && !todo.complete) {
             generateTodoDOM(todo)
             incomplete += 1
@@ -81,15 +64,14 @@ const generateTodoDOM = (todo) => {
     // setup checkbox
     todoCheck.setAttribute('type', 'checkbox')
     todoCheck.checked = todo.complete
-    
     todoCheck.addEventListener('change', () => {
         // shorter way of writing the if statement. Reverses the existing boolean
-        // todo.complete = !todo.complete
-        if (todoCheck.checked) {
-            todo.complete = true
-        } else {
-            todo.complete = false
-        }
+        todo.complete = !todo.complete
+        // if (todoCheck.checked) {
+        //     todo.complete = true
+        // } else {
+        //     todo.complete = false
+        // }
         saveAllTodos(todos)
         displayTodos(todos, filters)
     })
@@ -99,12 +81,13 @@ const generateTodoDOM = (todo) => {
     todoText.textContent = todo.body
     todoRoot.appendChild(todoText)
 
-    // setup delete button
-    todoDelete.textContent = 'Remove'
-    todoDelete.addEventListener('click', function () {
+    // setup delete
+    todoDelete.setAttribute('type', 'button')
+    todoDelete.textContent = "X"
+    todoDelete.addEventListener('click', () => {
+        console.log('remove')
         removeTodo(todo.id)
-        saveAllTodos(todos)
-        // debugger
+        // saveAllTodos(todos)
         displayTodos(todos, filters)
     })
     todoRoot.appendChild(todoDelete)
