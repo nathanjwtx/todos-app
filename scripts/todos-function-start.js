@@ -1,6 +1,6 @@
 const loadTodos = () => {
     // Call pre-filtered list of Todos
-    return localStorage.getItem('todos') != null ? JSON.parse(localStorage.getItem('todos')) : []
+    return localStorage.getItem('todos') ? JSON.parse(localStorage.getItem('todos')) : []
 }
 
 const saveTodo = (title, body) => {
@@ -21,9 +21,11 @@ const saveAllTodos = (todos) => {
 const removeTodo = (id) => {
     const todoIndex = todos.findIndex(todo => todo.id === id)
     console.log(todoIndex)
+    var removed
     if (todoIndex > -1) {
-        todos.splice(todoIndex, 1)
+        removed = todos.splice(todoIndex, 1)
     }
+    console.log(`Removed: ${removed}`)
     saveAllTodos(todos)
 }
 
@@ -66,7 +68,9 @@ const generateTodoDOM = (todo) => {
     todoCheck.checked = todo.complete
     todoCheck.addEventListener('change', () => {
         // shorter way of writing the if statement. Reverses the existing boolean
-        todo.complete = !todo.complete
+        if (todo) {
+            todo.complete = !todo.complete
+        }
         // if (todoCheck.checked) {
         //     todo.complete = true
         // } else {
