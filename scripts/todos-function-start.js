@@ -8,7 +8,7 @@ const loadTodos = () => {
 }
 
 const saveTodo = (title, body) => {
-    let todos = loadTodos()
+    // let todos = loadTodos()
     todos.push({
         id: uuidv4(),
         title: title,
